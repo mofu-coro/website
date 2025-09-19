@@ -1,4 +1,4 @@
-import { Coffee, MapPin, Clock, Phone, Mail, Heart, Users, Utensils, PawPrint, ArrowLeft } from "lucide-react"
+import { Coffee, MapPin, Clock, Phone, Mail, Heart, Users, Utensils, PawPrint, ArrowLeft, MessageCircle } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -33,18 +33,6 @@ export default function KitchenCarPage() {
           <p className="text-xl md:text-2xl mb-8 text-balance">
             駐車場に常設のキッチンカーで、コーヒーと軽食、ワンちゃん用おやつをご提供
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button size="lg" className="bg-white text-slate-800 hover:bg-gray-100">
-              メニューを見る
-            </Button>
-            <Button
-              size="lg"
-              variant="outline"
-              className="border-white text-white hover:bg-white hover:text-slate-800 bg-transparent"
-            >
-              営業時間を確認
-            </Button>
-          </div>
         </div>
       </section>
 
@@ -143,7 +131,7 @@ export default function KitchenCarPage() {
         </div>
       </section>
 
-      {/* Features Section */}
+      {/* Picture Gallery Section */}
       <section className="py-16 px-4 bg-muted/50">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-12">
@@ -151,42 +139,55 @@ export default function KitchenCarPage() {
             <p className="text-lg text-muted-foreground">施設駐車場に常設で、いつでも気軽にお立ち寄りいただけます</p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8">
-            <Card className="text-center">
-              <CardHeader>
-                <MapPin className="h-12 w-12 text-warm-600 mx-auto mb-4" />
-                <CardTitle>駐車場に常設</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-muted-foreground">
-                  イベント出店は行わず、施設の駐車場に常設しているため、いつでも安定してご利用いただけます
-                </p>
-              </CardContent>
-            </Card>
-
-            <Card className="text-center">
-              <CardHeader>
-                <Utensils className="h-12 w-12 text-warm-600 mx-auto mb-4" />
-                <CardTitle>手作りの味</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-muted-foreground">
-                  コーヒーは厳選豆を使用し、軽食とワンちゃん用おやつはすべて手作りでご提供しています
-                </p>
-              </CardContent>
-            </Card>
-
-            <Card className="text-center">
-              <CardHeader>
-                <Users className="h-12 w-12 text-warm-600 mx-auto mb-4" />
-                <CardTitle>憩いの場</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-muted-foreground">
-                  ワンちゃんと一緒にゆっくりとお食事やお茶を楽しめる、温かい憩いの空間です
-                </p>
-              </CardContent>
-            </Card>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="relative aspect-square overflow-hidden rounded-lg shadow-lg">
+              <Image
+                src="/cozy-kitchen-car-with-coffee-and-treats.jpg"
+                alt="キッチンカーの外観"
+                fill
+                className="object-cover hover:scale-105 transition-transform duration-300"
+              />
+            </div>
+            <div className="relative aspect-square overflow-hidden rounded-lg shadow-lg">
+              <Image
+                src="/professional-dog-grooming-session.jpg"
+                alt="キッチンカー内部"
+                fill
+                className="object-cover hover:scale-105 transition-transform duration-300"
+              />
+            </div>
+            <div className="relative aspect-square overflow-hidden rounded-lg shadow-lg">
+              <Image
+                src="/customers-playing-with-rescue-dogs-cats.jpg"
+                alt="お客様との交流"
+                fill
+                className="object-cover hover:scale-105 transition-transform duration-300"
+              />
+            </div>
+            <div className="relative aspect-square overflow-hidden rounded-lg shadow-lg">
+              <Image
+                src="/japanese-people-working-with-rescue-animals.jpg"
+                alt="スタッフの様子"
+                fill
+                className="object-cover hover:scale-105 transition-transform duration-300"
+              />
+            </div>
+            <div className="relative aspect-square overflow-hidden rounded-lg shadow-lg">
+              <Image
+                src="/dogs-playing-happily-in-outdoor-dog-run.jpg"
+                alt="ワンちゃんとの時間"
+                fill
+                className="object-cover hover:scale-105 transition-transform duration-300"
+              />
+            </div>
+            <div className="relative aspect-square overflow-hidden rounded-lg shadow-lg">
+              <Image
+                src="/rescue-dogs-and-cats-in-a-warm--welcoming-shelter-.jpg"
+                alt="温かい空間"
+                fill
+                className="object-cover hover:scale-105 transition-transform duration-300"
+              />
+            </div>
           </div>
         </div>
       </section>
@@ -209,13 +210,13 @@ export default function KitchenCarPage() {
       </section>
 
       {/* Contact & Hours */}
-      <section className="py-16 px-4 bg-muted/50">
+      <section className="py-12 px-4">
         <div className="max-w-4xl mx-auto">
-          <div className="text-center mb-12">
+          <div className="text-center mb-8">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">営業時間・お問い合わせ</h2>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-8">
+          <div className="grid md:grid-cols-2 gap-6">
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
@@ -244,31 +245,57 @@ export default function KitchenCarPage() {
 
             <Card>
               <CardHeader>
-                <CardTitle>お問い合わせ</CardTitle>
+                <CardTitle className="flex items-center gap-2">
+                  <MessageCircle className="h-5 w-5 text-green-600" />
+                  LINEでお問い合わせ
+                </CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
-                <div className="flex items-center gap-3">
-                  <Phone className="h-5 w-5 text-muted-foreground" />
-                  <div>
-                    <p className="font-semibold">電話</p>
-                    <p className="text-muted-foreground">03-1234-5678</p>
+                <p className="text-muted-foreground text-sm">
+                  キッチンカーに関するご質問やご相談を、LINEで気軽にお受けしています。
+                </p>
+                
+                {/* Two Options Layout */}
+                <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+                  {/* QR Code Option */}
+                  <div className="text-center">
+                    <div className="bg-white p-3 rounded-lg shadow-sm inline-block mb-2 border">
+                      <img
+                        src="https://qr-official.line.me/gs/M_480aaqto_GW.png?oat_content=qr"
+                        alt="LINE友だち追加QRコード"
+                        width={80}
+                        height={80}
+                        className="mx-auto rounded"
+                      />
+                    </div>
+                    <p className="text-xs text-muted-foreground">QRコードを読み取り</p>
+                  </div>
+
+                  {/* OR Divider */}
+                  <div className="flex items-center">
+                    <div className="bg-muted rounded-full px-3 py-1">
+                      <span className="text-muted-foreground font-medium text-xs">もしくは</span>
+                    </div>
+                  </div>
+
+                  {/* Button Option */}
+                  <div className="text-center">
+                    <a
+                      href="https://lin.ee/beSw4Fv"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-block transform hover:scale-105 transition-transform duration-200 mb-2"
+                    >
+                      <img
+                        src="https://scdn.line-apps.com/n/line_add_friends/btn/ja.png"
+                        alt="友だち追加"
+                        height={40}
+                        className="hover:opacity-90 transition-opacity shadow-sm rounded"
+                      />
+                    </a>
+                    <p className="text-xs text-muted-foreground">ボタンをタップ</p>
                   </div>
                 </div>
-                <div className="flex items-center gap-3">
-                  <Mail className="h-5 w-5 text-muted-foreground" />
-                  <div>
-                    <p className="font-semibold">メール</p>
-                    <p className="text-muted-foreground">kitchen@rescue-center.jp</p>
-                  </div>
-                </div>
-                <div className="flex items-center gap-3">
-                  <MapPin className="h-5 w-5 text-muted-foreground" />
-                  <div>
-                    <p className="font-semibold">場所</p>
-                    <p className="text-muted-foreground">施設駐車場内</p>
-                  </div>
-                </div>
-                <Button className="w-full mt-4 bg-slate-800 hover:bg-slate-700 text-white">お問い合わせする</Button>
               </CardContent>
             </Card>
           </div>

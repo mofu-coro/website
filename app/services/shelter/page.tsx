@@ -371,73 +371,58 @@ export default function ShelterPage() {
           </div>
 
           <div className="max-w-2xl mx-auto">
-            <Card className="border-sage-200 bg-gradient-to-br from-sage-50 to-sage-100 shadow-lg hover:shadow-xl transition-all duration-300">
-              <CardContent className="p-10 text-center">
-                <div className="mb-8">
-                  <div className="bg-white p-4 rounded-full w-20 h-20 mx-auto mb-6 flex items-center justify-center shadow-lg border-4 border-sage-200">
-                    <MessageCircle className="h-10 w-10 text-sage-600 fill-sage-100" />
-                  </div>
-                </div>
-
-                <h3 className="font-bold text-3xl mb-6 text-warm-900">LINE譲渡相談</h3>
-                <p className="text-warm-700 mb-10 leading-relaxed text-lg">
-                  譲渡に関するご質問やご相談を、LINEで気軽にお受けしています。
-                  <br />
-                  動物の詳細情報や譲渡条件についてもお答えします。
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <MessageCircle className="h-5 w-5 text-green-600" />
+                  LINE譲渡相談
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <p className="text-muted-foreground text-sm">
+                  譲渡に関するご質問やご相談を、LINEで気軽にお受けしています。動物の詳細情報や譲渡条件についてもお答えします。
                 </p>
-
+                
                 {/* Two Options Layout */}
-                <div className="flex flex-col md:flex-row items-center justify-center gap-8 mb-10">
+                <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
                   {/* QR Code Option */}
-                  <div className="flex-1 text-center">
-                    <div className="bg-white p-6 rounded-2xl shadow-md inline-block mb-4">
-                      <Image
+                  <div className="text-center">
+                    <div className="bg-white p-3 rounded-lg shadow-sm inline-block mb-2 border">
+                      <img
                         src="https://qr-official.line.me/gs/M_480aaqto_GW.png?oat_content=qr"
                         alt="LINE友だち追加QRコード"
-                        width={160}
-                        height={160}
-                        className="mx-auto rounded-lg"
+                        width={80}
+                        height={80}
+                        className="mx-auto rounded"
                       />
                     </div>
-                    <p className="text-sm font-medium text-sage-800">QRコードを読み取り</p>
+                    <p className="text-xs text-muted-foreground">QRコードを読み取り</p>
                   </div>
 
                   {/* OR Divider */}
                   <div className="flex items-center">
-                    <div className="bg-sage-200 rounded-full px-4 py-2">
-                      <span className="text-sage-700 font-bold text-sm">もしくは</span>
+                    <div className="bg-muted rounded-full px-3 py-1">
+                      <span className="text-muted-foreground font-medium text-xs">もしくは</span>
                     </div>
                   </div>
 
                   {/* Button Option */}
-                  <div className="flex-1 text-center">
+                  <div className="text-center">
                     <a
                       href="https://lin.ee/beSw4Fv"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-block transform hover:scale-105 transition-transform duration-200 mb-4"
+                      className="inline-block transform hover:scale-105 transition-transform duration-200 mb-2"
                     >
                       <img
                         src="https://scdn.line-apps.com/n/line_add_friends/btn/ja.png"
                         alt="友だち追加"
-                        height={50}
-                        className="hover:opacity-90 transition-opacity shadow-md rounded"
+                        height={40}
+                        className="hover:opacity-90 transition-opacity shadow-sm rounded"
                       />
                     </a>
-                    <p className="text-sm font-medium text-sage-800">ボタンをタップ</p>
+                    <p className="text-xs text-muted-foreground">ボタンをタップ</p>
                   </div>
-                </div>
-
-                {/* Reception Hours */}
-                <div className="bg-white/70 backdrop-blur-sm rounded-2xl p-6 shadow-md">
-                  <div className="flex items-center justify-center mb-3">
-                    <div className="bg-sage-100 p-2 rounded-full mr-3">
-                      <MessageCircle className="h-5 w-5 text-sage-800" />
-                    </div>
-                    <p className="text-lg font-bold text-sage-800">受付時間</p>
-                  </div>
-                  <p className="text-sage-700 font-medium text-xl">毎日 9:00-20:00</p>
-                  <p className="text-sm text-sage-600 mt-2">お気軽にメッセージをお送りください</p>
                 </div>
               </CardContent>
             </Card>

@@ -5,6 +5,7 @@ export interface NewsItem {
     category: "お知らせ" | "イベント" | "新着情報" | "重要"
     content: string
     isImportant?: boolean
+    serviceTag?: "トリミング" | "ドッグラン" | "キッチンカー" | "保護犬猫" | "里親募集" | "就労支援"
   }
   
   // Easy to maintain news data - just add new items to the top of the array
@@ -14,6 +15,7 @@ export interface NewsItem {
       title: "春の保護犬猫ふれあいイベント開催のお知らせ",
       date: "2024-03-15",
       category: "イベント",
+      serviceTag: "保護犬猫",
       content:
         "3月20日（水）〜3月24日（日）の期間中、春の保護犬猫ふれあいイベントを開催いたします。新しい家族を探している可愛い子たちとの出会いをお楽しみください。",
       isImportant: true,
@@ -23,6 +25,7 @@ export interface NewsItem {
       title: "トリミングサービス予約状況について",
       date: "2024-03-10",
       category: "お知らせ",
+      serviceTag: "トリミング",
       content:
         "現在、トリミングサービスの予約が大変混み合っております。ご利用をお考えの方は、お早めにお電話またはWebサイトからご予約をお取りください。",
     },
@@ -31,6 +34,7 @@ export interface NewsItem {
       title: "ドッグラン設備メンテナンスのお知らせ",
       date: "2024-03-05",
       category: "重要",
+      serviceTag: "ドッグラン",
       content:
         "3月12日（火）は設備メンテナンスのため、ドッグランのご利用を一時休止させていただきます。ご不便をおかけいたしますが、ご理解のほどよろしくお願いいたします。",
       isImportant: true,
@@ -40,6 +44,7 @@ export interface NewsItem {
       title: "キッチンカー新メニュー登場！",
       date: "2024-03-01",
       category: "新着情報",
+      serviceTag: "キッチンカー",
       content:
         "キッチンカーに新しいメニューが登場しました！地元の新鮮な野菜を使用したヘルシーサンドイッチと、手作りスイーツをぜひお試しください。",
     },
@@ -48,6 +53,7 @@ export interface NewsItem {
       title: "ボランティアスタッフ募集中",
       date: "2024-02-28",
       category: "お知らせ",
+      serviceTag: "保護犬猫",
       content:
         "保護犬猫のお世話やイベントのお手伝いをしていただけるボランティアスタッフを募集しています。動物好きの方、お気軽にお問い合わせください。",
     },
@@ -56,6 +62,7 @@ export interface NewsItem {
       title: "嬉しい家族決定のご報告",
       date: "2024-02-25",
       category: "新着情報",
+      serviceTag: "里親募集",
       content:
         "今月も多くの保護犬猫たちに新しい家族が見つかりました。温かい家庭に迎えられた子たちの幸せそうな様子を見ることができ、スタッフ一同大変嬉しく思っております。",
     },

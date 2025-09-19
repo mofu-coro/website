@@ -10,73 +10,193 @@ import {
   CheckCircle,
   ArrowLeft,
   Phone,
-  Mail,
   MapPin,
   Star,
   Shield,
   Sparkles,
   Calendar,
+  MessageCircle,
+  Home,
 } from "lucide-react"
 import Link from "next/link"
 import Image from "next/image"
 
-const trimmingServices = [
+// Dog trimming menu data
+const dogTrimmingMenu = [
   {
-    name: "基本トリミングコース",
-    duration: "90-120分",
-    price: "小型犬: 4,500円〜\n中型犬: 6,000円〜\n大型犬: 8,500円〜",
-    description: "シャンプー、カット、爪切り、耳掃除を含む基本的なグルーミング",
-    features: ["薬用シャンプー使用", "爪切り・耳掃除", "基本カット", "ブロー仕上げ", "健康チェック"],
-    popular: true,
-    category: "トリミング",
+    breed: "チワワ（スムース）",
+    quickShampoo: "¥2,200",
+    shampooCourse: "¥3,300〜",
+    cutCourse: "—",
   },
   {
-    name: "プレミアムスパコース",
-    duration: "150-180分",
-    price: "小型犬: 6,500円〜\n中型犬: 8,500円〜\n大型犬: 11,000円〜",
-    description: "高級シャンプー＆トリートメントで毛艶と健康をサポート",
-    features: ["オーガニックシャンプー", "毛質改善トリートメント", "アロマバス", "マッサージ", "写真撮影サービス"],
-    popular: false,
-    category: "トリミング",
+    breed: "チワワ（ロング）",
+    quickShampoo: "¥2,200",
+    shampooCourse: "¥3,850〜",
+    cutCourse: "¥4,950〜",
   },
   {
-    name: "猫専用グルーミング",
-    duration: "60-90分",
-    price: "短毛種: 3,500円〜\n長毛種: 5,000円〜",
-    description: "猫のストレスを最小限に抑えた専門的なグルーミング",
-    features: ["猫専用個室", "ストレス軽減技術", "毛玉除去", "部分カット対応", "猫専門スタッフ"],
-    popular: false,
-    category: "トリミング",
+    breed: "Mピンシャー",
+    quickShampoo: "¥2,200",
+    shampooCourse: "¥3,850〜",
+    cutCourse: "—",
   },
+  {
+    breed: "Mダックス",
+    quickShampoo: "¥2,750",
+    shampooCourse: "¥4,400〜",
+    cutCourse: "¥5,500〜",
+  },
+  {
+    breed: "パグ",
+    quickShampoo: "¥2,750",
+    shampooCourse: "¥4,400〜",
+    cutCourse: "—",
+  },
+  {
+    breed: "ボストンテリア",
+    quickShampoo: "¥2,750",
+    shampooCourse: "¥4,400〜",
+    cutCourse: "—",
+  },
+  {
+    breed: "パピヨン",
+    quickShampoo: "¥3,300",
+    shampooCourse: "¥4,950〜",
+    cutCourse: "¥6,050〜",
+  },
+  {
+    breed: "ポメラニアン",
+    quickShampoo: "¥3,300",
+    shampooCourse: "¥5,280〜",
+    cutCourse: "¥6,380〜",
+  },
+  {
+    breed: "ヨーキー",
+    quickShampoo: "¥3,300",
+    shampooCourse: "¥5,280〜",
+    cutCourse: "¥6,600〜",
+  },
+  {
+    breed: "マルチーズ",
+    quickShampoo: "¥3,300",
+    shampooCourse: "¥5,280〜",
+    cutCourse: "¥6,600〜",
+  },
+  {
+    breed: "シーズー",
+    quickShampoo: "¥3,300",
+    shampooCourse: "¥5,280〜",
+    cutCourse: "¥6,600〜",
+  },
+  {
+    breed: "ペキニーズ",
+    quickShampoo: "¥3,300",
+    shampooCourse: "¥5,280〜",
+    cutCourse: "¥6,600〜",
+  },
+  {
+    breed: "キャバリア",
+    quickShampoo: "¥3,300",
+    shampooCourse: "¥5,280〜",
+    cutCourse: "¥6,930〜",
+  },
+  {
+    breed: "トイプードル",
+    quickShampoo: "¥3,300",
+    shampooCourse: "¥5,830〜",
+    cutCourse: "¥7,700〜",
+  },
+  {
+    breed: "Mシュナウザー",
+    quickShampoo: "¥3,300",
+    shampooCourse: "¥5,830〜",
+    cutCourse: "¥7,700〜",
+  },
+  {
+    breed: "ビーグル",
+    quickShampoo: "¥4,400",
+    shampooCourse: "¥6,600〜",
+    cutCourse: "—",
+  },
+  {
+    breed: "柴",
+    quickShampoo: "¥4,400",
+    shampooCourse: "¥6,600〜",
+    cutCourse: "—",
+  },
+  {
+    breed: "コーギー",
+    quickShampoo: "¥4,400",
+    shampooCourse: "¥6,600〜",
+    cutCourse: "¥8,250〜",
+  },
+  {
+    breed: "シェルティ",
+    quickShampoo: "¥5,500",
+    shampooCourse: "¥7,700〜",
+    cutCourse: "¥8,800〜",
+  },
+  {
+    breed: "ボーダーコリー",
+    quickShampoo: "¥5,500",
+    shampooCourse: "¥7,700〜",
+    cutCourse: "¥8,800〜",
+  },
+]
+
+// Cat trimming menu data
+const catTrimmingMenu = [
+  {
+    breed: "短毛種",
+    quickShampoo: "¥3,300〜",
+    shampooCourse: "¥4,950〜",
+    cutCourse: "¥6,050〜",
+  },
+  {
+    breed: "長毛種",
+    quickShampoo: "¥4,400〜",
+    shampooCourse: "¥6,600〜",
+    cutCourse: "¥8,250〜",
+  },
+]
+
+// Option menu items
+const optionMenuItems = [
+  { name: "ひげカット", price: "¥330" },
+  { name: "部分ケア", price: "¥550〜" },
+  { name: "部分カット", price: "¥550〜" },
+  { name: "オールシザー", price: "¥1,100〜" },
+  { name: "デザインカット", price: "¥1,100〜" },
+  { name: "足先バリカン", price: "¥550〜" },
+  { name: "毛玉取り", price: "¥550〜" },
+  { name: "各種エステパック", price: "¥1,100〜" },
+  { name: "炭酸浴・アロマ温浴", price: "¥770〜" },
+  { name: "薬浴", price: "¥770〜" },
+  { name: "トリートメント", price: "¥550〜" },
+  { name: "オイルクレンジング", price: "¥550〜" },
+  { name: "シャンプーグレードアップ", price: "¥550〜" },
+  { name: "写真プリント", price: "¥110" },
+  { name: "太さで料金 ★超小型5kg〜★小型7kg〜★中型10kg〜", price: "¥330〜" },
 ]
 
 const temporaryCareServices = [
   {
     name: "日帰り一時預かり",
     duration: "8時間まで",
-    price: "小型犬・猫: 2,500円\n中型犬: 3,000円\n大型犬: 3,500円",
+    price: "小型犬: 2,500円\n中型犬: 3,000円\n大型犬: 3,500円",
     description: "お出かけや急用の際に安心してお預けいただけます",
-    features: ["個別ケージ完備", "お散歩サービス", "食事・おやつ対応", "健康観察", "写真報告"],
+    features: [
+      "ケージフリー環境",
+      "自由に遊べる広いスペース",
+      "お散歩サービス",
+      "食事・おやつ対応",
+      "健康観察",
+      "写真報告",
+    ],
     popular: true,
     category: "一時預かり",
-  },
-  {
-    name: "1泊2日預かり",
-    duration: "最大48時間",
-    price: "小型犬・猫: 4,500円\n中型犬: 5,500円\n大型犬: 6,500円",
-    description: "旅行や出張時の宿泊預かりサービス",
-    features: ["24時間見守り", "朝夕お散歩", "食事管理", "投薬対応", "毎日写真報告"],
-    popular: false,
-    category: "一時預かり",
-  },
-  {
-    name: "長期預かり（3日以上）",
-    duration: "3日〜1ヶ月",
-    price: "1日あたり\n小型犬・猫: 2,200円\n中型犬: 2,700円\n大型犬: 3,200円",
-    description: "長期出張や入院時の安心預かりサービス",
-    features: ["割引料金適用", "定期健康チェック", "運動・遊び時間", "個別ケア対応", "週2回写真報告"],
-    popular: false,
-    category: "一時預かり",
+    highlight: "ケージフリー",
   },
 ]
 
@@ -135,220 +255,271 @@ export default function TrimmingPage() {
         </div>
       </div>
 
-      <div className="container mx-auto px-4 py-16 space-y-20">
+      <div className="container mx-auto px-4 py-16 space-y-12 md:space-y-20">
         {/* Trimming Services */}
         <section>
           <h2 className="text-3xl md:text-4xl font-bold text-center mb-4 text-warm-900">トリミングサービス</h2>
           <p className="text-center text-warm-700 mb-12 max-w-3xl mx-auto">
             JKC認定トリマーによる専門的なグルーミングで、ペットの健康と美しさをサポートします
           </p>
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-16">
-            {trimmingServices.map((service, index) => (
-              <Card
-                key={index}
-                className={`h-full relative ${service.popular ? "ring-2 ring-sage-400 shadow-lg" : ""} border-warm-200`}
-              >
-                {service.popular && (
-                  <Badge className="absolute -top-2 left-1/2 transform -translate-x-1/2 bg-sage-600 hover:bg-sage-700">
-                    人気No.1
-                  </Badge>
-                )}
-                <CardHeader>
-                  <div className="flex items-center gap-2 mb-2">
-                    <Scissors className="h-5 w-5 text-sage-600" />
-                    <Badge variant="outline" className="text-xs border-sage-300 text-sage-700">
-                      {service.category}
-                    </Badge>
+
+          {/* Price List Placeholders */}
+          <div className="max-w-5xl mx-auto space-y-8">
+            {/* Dog Pricing */}
+            <Card className="border-warm-200 shadow-lg overflow-hidden">
+              <div className="bg-gradient-to-r from-warm-600 to-warm-700 p-4 md:p-6">
+                <h3 className="text-xl md:text-2xl font-bold text-black flex items-center justify-center gap-3">
+                  <span className="text-2xl md:text-3xl">🐕</span>
+                  ワンちゃん用料金表
+                </h3>
+              </div>
+              <CardContent className="p-6 md:p-8">
+                <div className="bg-gradient-to-br from-warm-50 to-warm-100 rounded-2xl p-6 md:p-8 text-center border-2 border-dashed border-warm-300">
+                  <div className="mb-6">
+                    <div className="bg-white p-4 rounded-full w-16 h-16 md:w-20 md:h-20 mx-auto mb-4 flex items-center justify-center shadow-lg border-4 border-warm-200">
+                      <Scissors className="h-8 w-8 md:h-10 md:w-10 text-warm-800" />
+                    </div>
                   </div>
-                  <CardTitle className="text-xl text-warm-900">{service.name}</CardTitle>
-                  <div className="flex items-center gap-2 text-sm text-warm-600">
-                    <Clock className="h-4 w-4" />
-                    {service.duration}
+                  <h4 className="text-lg md:text-xl font-bold text-warm-900 mb-4">犬用料金表チラシ</h4>
+                  <p className="text-warm-700 text-sm md:text-base mb-4">
+                    犬種別のトリミング料金表をCanvaで作成予定
+                  </p>
+                  <div className="bg-white rounded-xl p-4 md:p-6 bg-white/70 backdrop-blur-sm">
+                    <p className="text-warm-600 font-medium text-sm md:text-base">
+                      小型犬から大型犬まで対応<br />
+                      詳細な料金表は準備中です
+                    </p>
                   </div>
-                  <div className="text-sm font-bold text-sage-600 whitespace-pre-line">{service.price}</div>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-warm-700 mb-4">{service.description}</p>
-                  <div className="space-y-2 mb-6">
-                    {service.features.map((feature, idx) => (
-                      <div key={idx} className="flex items-center gap-2 text-sm text-warm-700">
-                        <CheckCircle className="h-4 w-4 text-sage-600 flex-shrink-0" />
-                        {feature}
-                      </div>
-                    ))}
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Cat Pricing */}
+            <Card className="border-sage-200 shadow-lg overflow-hidden">
+              <div className="bg-gradient-to-r from-sage-600 to-sage-700 p-4 md:p-6">
+                <h3 className="text-xl md:text-2xl font-bold text-black flex items-center justify-center gap-3">
+                  <span className="text-2xl md:text-3xl">🐱</span>
+                  ネコちゃん用料金表
+                </h3>
+              </div>
+              <CardContent className="p-6 md:p-8">
+                <div className="bg-gradient-to-br from-sage-50 to-sage-100 rounded-2xl p-6 md:p-8 text-center border-2 border-dashed border-sage-300">
+                  <div className="mb-6">
+                    <div className="bg-white p-4 rounded-full w-16 h-16 md:w-20 md:h-20 mx-auto mb-4 flex items-center justify-center shadow-lg border-4 border-sage-200">
+                      <Scissors className="h-8 w-8 md:h-10 md:w-10 text-sage-800" />
+                    </div>
                   </div>
-                  <Button className="w-full bg-warm-600 hover:bg-warm-700">予約する</Button>
-                </CardContent>
-              </Card>
-            ))}
+                  <h4 className="text-lg md:text-xl font-bold text-warm-900 mb-4">猫用料金表チラシ</h4>
+                  <p className="text-warm-700 text-sm md:text-base mb-4">
+                    猫専用のトリミング料金表をCanvaで作成予定
+                  </p>
+                  <div className="bg-white rounded-xl p-4 md:p-6 bg-white/70 backdrop-blur-sm">
+                    <p className="text-warm-600 font-medium text-sm md:text-base">
+                      短毛種・長毛種対応<br />
+                      ストレス軽減技術で安心施術
+                    </p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
           </div>
         </section>
 
         {/* Temporary Care Services */}
-        <section className="bg-warm-50 -mx-4 px-4 py-16">
-          <div className="container mx-auto">
+        <section className="relative -mx-[50vw] left-[50%] right-[50%] w-[100vw] py-16 bg-muted/30">
+          <div className="container mx-auto px-6">
             <h2 className="text-3xl md:text-4xl font-bold text-center mb-4 text-warm-900">一時預かりサービス</h2>
-            <p className="text-center text-warm-700 mb-12 max-w-3xl mx-auto">
-              愛玩動物看護師による24時間体制の見守りで、安心してお預けいただけます
+            <p className="text-center text-warm-700 mb-8 max-w-3xl mx-auto">
+              ケージフリーの快適な環境で、わんちゃんがストレスなく過ごせる日帰り預かりサービスです
             </p>
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-              {temporaryCareServices.map((service, index) => (
-                <Card
-                  key={index}
-                  className={`h-full relative ${service.popular ? "ring-2 ring-sage-400 shadow-lg" : ""} border-warm-200 bg-white`}
-                >
-                  {service.popular && (
-                    <Badge className="absolute -top-2 left-1/2 transform -translate-x-1/2 bg-sage-600 hover:bg-sage-700">
-                      人気No.1
-                    </Badge>
-                  )}
-                  <CardHeader>
-                    <div className="flex items-center gap-2 mb-2">
-                      <Calendar className="h-5 w-5 text-sage-600" />
-                      <Badge variant="outline" className="text-xs border-sage-300 text-sage-700">
-                        {service.category}
-                      </Badge>
-                    </div>
-                    <CardTitle className="text-xl text-warm-900">{service.name}</CardTitle>
-                    <div className="flex items-center gap-2 text-sm text-warm-600">
-                      <Clock className="h-4 w-4" />
-                      {service.duration}
-                    </div>
-                    <div className="text-sm font-bold text-sage-600 whitespace-pre-line">{service.price}</div>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-warm-700 mb-4">{service.description}</p>
-                    <div className="space-y-2 mb-6">
-                      {service.features.map((feature, idx) => (
-                        <div key={idx} className="flex items-center gap-2 text-sm text-warm-700">
-                          <CheckCircle className="h-4 w-4 text-sage-600 flex-shrink-0" />
-                          {feature}
-                        </div>
-                      ))}
-                    </div>
-                    <Button className="w-full bg-warm-600 hover:bg-warm-700">予約する</Button>
-                  </CardContent>
-                </Card>
-              ))}
+            <div className="bg-white/60 backdrop-blur-sm rounded-2xl p-6 shadow-lg max-w-4xl mx-auto mb-8">
+              <p className="text-warm-700 text-center leading-relaxed text-lg">
+                <span className="font-semibold">こんな時におすすめです！</span><br />
+                🌞 暑すぎて散歩に行けない夏の日に<br />
+                ❄️ 雪で外遊びができない冬の日に<br />
+                🍽️ 旅行先でペット同伴NGのお店に行きたい時に<br />
+                <span className="text-sage-700 font-medium mt-2 block">わんちゃんが安心して過ごせる第二のお家です</span>
+              </p>
             </div>
-          </div>
-        </section>
 
-        {/* Facility Features */}
-        <section>
-          <h2 className="text-3xl md:text-4xl font-bold text-center mb-4 text-warm-900">私たちの特徴</h2>
-          <p className="text-center text-warm-700 mb-12 max-w-2xl mx-auto">
-            専門スタッフと充実した設備で、大切なペットに最高のケアを提供します
-          </p>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {facilityFeatures.map((feature, index) => {
-              const Icon = feature.icon
-              return (
-                <Card key={index} className="text-center border-warm-200 hover:shadow-lg transition-shadow">
-                  <CardHeader>
-                    <div className="mx-auto mb-4 p-4 bg-warm-100 rounded-full w-fit">
-                      <Icon className="h-8 w-8 text-warm-600" />
+            {/* Cage-free image gallery */}
+            <div className="max-w-5xl mx-auto mb-12">
+              <h3 className="text-xl md:text-2xl font-bold text-warm-900 text-center mb-6">
+                ケージフリー環境の様子
+              </h3>
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                {/* Photo placeholders */}
+                {[1, 2, 3, 4, 5, 6].map((index) => (
+                  <div
+                    key={index}
+                    className="bg-gradient-to-br from-warm-50 to-sage-50 rounded-xl h-48 md:h-56 flex items-center justify-center border-2 border-dashed border-warm-300 shadow-md"
+                  >
+                    <div className="text-center">
+                      <Home className="h-8 w-8 text-warm-400 mx-auto mb-2" />
+                      <p className="text-warm-600 font-medium text-sm">写真{index}</p>
+                      <p className="text-warm-500 text-xs mt-1">ケージフリー環境</p>
                     </div>
-                    <div className="text-2xl font-bold text-sage-600 mb-2">{feature.highlight}</div>
-                    <CardTitle className="text-xl text-warm-900">{feature.title}</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-warm-700">{feature.description}</p>
-                  </CardContent>
-                </Card>
-              )
-            })}
-          </div>
-        </section>
+                  </div>
+                ))}
+              </div>
+              <p className="text-center text-warm-700 mt-6 text-sm">
+                わんちゃんが自由に遊べる広々とした空間での様子をご覧いただけます
+              </p>
+            </div>
 
-        {/* Contact and Location */}
-        <section className="bg-sage-50 -mx-4 px-4 py-16">
-          <div className="container mx-auto">
-            <h2 className="text-3xl md:text-4xl font-bold text-center mb-4 text-warm-900">ご予約・お問い合わせ</h2>
-            <p className="text-center text-warm-700 mb-12 max-w-2xl mx-auto">
-              お電話またはメールでお気軽にご予約・ご相談ください
-            </p>
-
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
-              {/* Contact Information */}
-              <div className="space-y-6">
-                <Card className="border-warm-200">
-                  <CardContent className="p-8 text-center">
-                    <Phone className="h-10 w-10 text-warm-600 mx-auto mb-4" />
-                    <h3 className="font-bold text-lg mb-2 text-warm-900">お電話でのご予約</h3>
-                    <p className="text-2xl font-bold text-sage-600 mb-2">03-1234-5678</p>
-                    <p className="text-sm text-warm-600 mb-1">受付時間: 平日 9:00-18:00</p>
-                    <p className="text-sm text-warm-600">土日祝 10:00-17:00</p>
-                  </CardContent>
-                </Card>
-                <Card className="border-warm-200">
-                  <CardContent className="p-8 text-center">
-                    <Mail className="h-10 w-10 text-warm-600 mx-auto mb-4" />
-                    <h3 className="font-bold text-lg mb-2 text-warm-900">メールでのお問い合わせ</h3>
-                    <p className="text-lg font-semibold text-sage-600 mb-2">trimming@inochi-tsunagi.jp</p>
-                    <p className="text-sm text-warm-600 mb-1">24時間受付</p>
-                    <p className="text-sm text-warm-600">返信: 1営業日以内</p>
-                  </CardContent>
-                </Card>
+            <div className="max-w-4xl mx-auto space-y-12">
+              {/* Day Care Service */}
+              <div>
+                <h3 className="text-2xl font-bold text-warm-900 mb-6 flex items-center gap-3">
+                  <span className="text-2xl">🐕</span>
+                  日帰り一時預かり
+                </h3>
+                
+                <div className="space-y-4 text-warm-800">
+                  <div className="space-y-2">
+                    <div className="text-lg">
+                      <span className="font-semibold">1時間あたり：980円</span>
+                      <span className="text-sm text-warm-600 ml-2">(tax in)</span>
+                    </div>
+                    <div className="text-lg">
+                      <span className="font-semibold">3時間以上：2,500円</span>
+                      <span className="text-sm text-warm-600 ml-2">(1日中預かっても2,500円)</span>
+                    </div>
+                  </div>
+                  
+                  <div className="pt-4 space-y-2">
+                    <p className="text-warm-700">• ケージフリー環境で自由に過ごせます</p>
+                    <p className="text-warm-700">• お散歩・食事・おやつ対応</p>
+                    <p className="text-warm-700">• 健康観察・写真報告</p>
+                    <p className="text-warm-700">• 愛玩動物看護師が常駐</p>
+                  </div>
+                  
+                  <div className="pt-4">
+                    <p className="text-warm-700">営業時間：9:00〜18:00</p>
+                  </div>
+                </div>
               </div>
 
-              {/* Location and Hours */}
-              <Card className="border-warm-200">
-                <CardContent className="p-8">
-                  <MapPin className="h-12 w-12 text-warm-600 mx-auto mb-4" />
-                  <h3 className="font-bold text-xl mb-4 text-warm-900 text-center">施設情報</h3>
+              {/* Overnight Stay */}
+              <div>
+                <h3 className="text-2xl font-bold text-warm-900 mb-6 flex items-center gap-3">
+                  <span className="text-2xl">🏠</span>
+                  宿泊預かりサービス
+                </h3>
+                
+                <div className="space-y-4 text-warm-800">
+                  <div className="text-lg">
+                    <span className="font-semibold">1泊2日〜長期滞在</span>
+                  </div>
+                  
+                  <div className="space-y-2">
+                    <p className="text-warm-700">• ケージフリー環境</p>
+                    <p className="text-warm-700">• 夜間はカメラで監視（お客様もチェック可能）</p>
+                    <p className="text-warm-700">• 徒歩圏内に愛玩動物看護師が待機（緊急時すぐ対応）</p>
+                    <p className="text-warm-700">• 毎日の写真・動画報告</p>
+                    <p className="text-warm-700">• 個別対応可能</p>
+                  </div>
+                  
+                  <div className="pt-4">
+                    <p className="text-warm-700">
+                      料金や詳細については、下記のLINEでお気軽にお問い合わせください。
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
 
-                  <div className="space-y-4">
-                    <div>
-                      <h4 className="font-semibold text-warm-900 mb-2">所在地</h4>
-                      <p className="text-warm-700">
-                        〒123-4567
-                        <br />
-                        東京都○○区○○町1-2-3
-                        <br />
-                        いのちつなぎ動物愛護センター
-                      </p>
+          </div>
+        </section>
+
+
+        {/* Contact Section */}
+        <section className="bg-sage-50 -mx-4 px-4 py-16">
+          <div className="container mx-auto">
+            <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-warm-900">ご予約・お問い合わせ</h2>
+
+            <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
+              {/* LINE Contact */}
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <MessageCircle className="h-5 w-5 text-green-600" />
+                    LINE予約・お問い合わせ
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <p className="text-muted-foreground text-sm">
+                    トリミング・一時預かり・お泊まり預かりのご予約やご相談を、LINEで気軽にお受けしています。
+                  </p>
+                  
+                  {/* Two Options Layout */}
+                  <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+                    {/* QR Code Option */}
+                    <div className="text-center">
+                      <div className="bg-white p-3 rounded-lg shadow-sm inline-block mb-2 border">
+                        <img
+                          src="https://qr-official.line.me/gs/M_480aaqto_GW.png?oat_content=qr"
+                          alt="LINE友だち追加QRコード"
+                          width={80}
+                          height={80}
+                          className="mx-auto rounded"
+                        />
+                      </div>
+                      <p className="text-xs text-muted-foreground">QRコードを読み取り</p>
                     </div>
 
-                    <div>
-                      <h4 className="font-semibold text-warm-900 mb-2">営業時間</h4>
-                      <div className="text-warm-700 space-y-1">
-                        <p>平日: 10:00 - 18:00</p>
-                        <p>土日祝: 9:00 - 17:00</p>
-                        <p className="text-sm text-warm-600">定休日: 毎週水曜日</p>
+                    {/* OR Divider */}
+                    <div className="flex items-center">
+                      <div className="bg-muted rounded-full px-3 py-1">
+                        <span className="text-muted-foreground font-medium text-xs">もしくは</span>
                       </div>
                     </div>
 
-                    <div>
-                      <h4 className="font-semibold text-warm-900 mb-2">駐車場</h4>
-                      <p className="text-warm-700">無料駐車場 20台完備</p>
+                    {/* Button Option */}
+                    <div className="text-center">
+                      <a
+                        href="https://lin.ee/beSw4Fv"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-block transform hover:scale-105 transition-transform duration-200 mb-2"
+                      >
+                        <img
+                          src="https://scdn.line-apps.com/n/line_add_friends/btn/ja.png"
+                          alt="友だち追加"
+                          height={40}
+                          className="hover:opacity-90 transition-opacity shadow-sm rounded"
+                        />
+                      </a>
+                      <p className="text-xs text-muted-foreground">ボタンをタップ</p>
                     </div>
                   </div>
+                </CardContent>
+              </Card>
 
-                  <Button
-                    variant="outline"
-                    className="w-full mt-6 border-warm-300 text-warm-700 hover:bg-warm-50 bg-transparent"
-                  >
-                    <MapPin className="h-4 w-4 mr-2" />
-                    地図を見る
-                  </Button>
+              {/* Phone Contact */}
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <Phone className="h-5 w-5 text-blue-600" />
+                    お電話予約
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <p className="text-muted-foreground text-sm">
+                    お急ぎの場合や詳しいご相談は、お電話でお気軽にどうぞ。
+                  </p>
+                  
+                  <div className="text-center">
+                    <p className="text-2xl font-bold text-blue-600 mb-3">03-1234-5678</p>
+                    <div className="text-sm text-muted-foreground space-y-1">
+                      <p>平日: 9:00-18:00</p>
+                      <p>土日祝: 10:00-17:00</p>
+                    </div>
+                  </div>
                 </CardContent>
               </Card>
             </div>
 
-            {/* Booking Notice */}
-            <Card className="border-sage-300 bg-sage-100">
-              <CardContent className="p-8 text-center">
-                <Sparkles className="h-10 w-10 text-sage-600 mx-auto mb-4" />
-                <h3 className="font-bold text-lg mb-4 text-warm-900">ご予約について</h3>
-                <div className="text-warm-700 space-y-2 max-w-2xl mx-auto">
-                  <p>• トリミングは前日までのご予約をお願いします</p>
-                  <p>• 一時預かりは当日でも空きがあればお受けできます</p>
-                  <p>• 初回ご利用時は事前カウンセリングを行います</p>
-                  <p>• ワクチン接種証明書をお持ちください</p>
-                </div>
-              </CardContent>
-            </Card>
           </div>
         </section>
       </div>

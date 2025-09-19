@@ -4,6 +4,7 @@ import { HeroSection } from "@/components/hero-section"
 import { ServicesSection } from "@/components/services-section"
 import { AnimalsSection } from "@/components/animals-section"
 import { NewsSection } from "@/components/news-section"
+import { ContactSection } from "@/components/contact-section"
 import { AccessSection } from "@/components/access-section"
 
 export default function HomePage() {
@@ -15,6 +16,7 @@ export default function HomePage() {
         <ServicesSection />
         <AnimalsSection />
         <NewsSection />
+        <ContactSection />
         <AccessSection />
       </main>
       <MobileDock />

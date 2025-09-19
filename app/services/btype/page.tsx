@@ -495,28 +495,59 @@ export default function EmploymentSupportBPage() {
               </Card>
 
               {/* LINE Contact */}
-              <Card className="border-warm-200 bg-white">
-                <CardContent className="p-6 text-center">
-                  <MessageCircle className="h-10 w-10 text-warm-600 mx-auto mb-4" />
-                  <h3 className="font-bold text-lg mb-2 text-warm-900">LINEでのご相談</h3>
-                  <div className="mb-4">
-                    <QrCode className="h-16 w-16 text-sage-600 mx-auto mb-2" />
-                    <p className="text-sm text-warm-600">
-                      QRコードを読み取って
-                      <br />
-                      友だち追加してください
-                    </p>
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2 justify-center">
+                    <MessageCircle className="h-5 w-5 text-green-600" />
+                    LINEでのご相談
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <p className="text-muted-foreground text-sm text-center">
+                    就労支援に関するご質問やご相談を、LINEで気軽にお受けしています。
+                  </p>
+                  
+                  {/* Two Options Layout */}
+                  <div className="flex flex-col items-center justify-center gap-4">
+                    {/* QR Code Option */}
+                    <div className="text-center">
+                      <div className="bg-white p-3 rounded-lg shadow-sm inline-block mb-2 border">
+                        <img
+                          src="https://qr-official.line.me/gs/M_480aaqto_GW.png?oat_content=qr"
+                          alt="LINE友だち追加QRコード"
+                          width={80}
+                          height={80}
+                          className="mx-auto rounded"
+                        />
+                      </div>
+                      <p className="text-xs text-muted-foreground">QRコードを読み取り</p>
+                    </div>
+
+                    {/* OR Divider */}
+                    <div className="flex items-center">
+                      <div className="bg-muted rounded-full px-3 py-1">
+                        <span className="text-muted-foreground font-medium text-xs">もしくは</span>
+                      </div>
+                    </div>
+
+                    {/* Button Option */}
+                    <div className="text-center">
+                      <a
+                        href="https://lin.ee/beSw4Fv"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-block transform hover:scale-105 transition-transform duration-200 mb-2"
+                      >
+                        <img
+                          src="https://scdn.line-apps.com/n/line_add_friends/btn/ja.png"
+                          alt="友だち追加"
+                          height={40}
+                          className="hover:opacity-90 transition-opacity shadow-sm rounded"
+                        />
+                      </a>
+                      <p className="text-xs text-muted-foreground">ボタンをタップ</p>
+                    </div>
                   </div>
-                  <Button
-                    variant="outline"
-                    className="border-sage-400 text-sage-700 hover:bg-sage-50 bg-transparent"
-                    asChild
-                  >
-                    <Link href="https://line.me/ti/p/your-line-id" target="_blank">
-                      <MessageCircle className="h-4 w-4 mr-2" />
-                      LINEで相談
-                    </Link>
-                  </Button>
                 </CardContent>
               </Card>
 
