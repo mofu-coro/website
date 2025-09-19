@@ -138,17 +138,6 @@ export function ServicesSection() {
                       <ArrowRight className="h-4 w-4 transition-transform group-hover/btn:translate-x-1" />
                     </span>
                   </Button>
-
-                  {service.additionalLink && (
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      className={`text-sm ${service.iconColor} hover:bg-white/80 transition-all duration-300 font-medium rounded-lg`}
-                      onClick={() => (window.location.href = service.additionalLink.href)}
-                    >
-                      {service.additionalLink.text}
-                    </Button>
-                  )}
                 </CardContent>
               </Card>
             )
