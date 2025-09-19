@@ -17,6 +17,8 @@ export interface Animal {
   arrivalDate: string
   status: "available" | "pending" | "adopted"
   specialNeeds?: string
+  medicalInfo?: string
+  adoptionRequirements?: string[]
 }
 
 // Sample animals data - easy to maintain by adding new animals to the array

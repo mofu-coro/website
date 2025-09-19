@@ -14,16 +14,27 @@ export default function AnimalsPage() {
 
   const getStatusColor = (status: Animal["status"]) => {
     switch (status) {
-      case "譲渡可能":
+      case "available":
         return "bg-green-100 text-green-800"
-      case "譲渡予定":
+      case "pending":
         return "bg-yellow-100 text-yellow-800"
-      case "治療中":
-        return "bg-red-100 text-red-800"
-      case "ふれあい可能":
-        return "bg-blue-100 text-blue-800"
+      case "adopted":
+        return "bg-gray-100 text-gray-800"
       default:
         return "bg-gray-100 text-gray-800"
+    }
+  }
+
+  const getStatusLabel = (status: Animal["status"]) => {
+    switch (status) {
+      case "available":
+        return "譲渡可能"
+      case "pending":
+        return "譲渡予定"
+      case "adopted":
+        return "譲渡済み"
+      default:
+        return status
     }
   }
 
@@ -86,7 +97,7 @@ export default function AnimalsPage() {
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                     />
                     <div className="absolute top-3 right-3">
-                      <Badge className={getStatusColor(animal.status)}>{animal.status}</Badge>
+                      <Badge className={getStatusColor(animal.status)}>{getStatusLabel(animal.status)}</Badge>
                     </div>
                   </div>
 
@@ -147,7 +158,7 @@ export default function AnimalsPage() {
             <div className="p-6 space-y-4">
               <div className="flex items-center justify-between">
                 <h2 className="text-2xl font-bold">{selectedAnimal.name}</h2>
-                <Badge className={getStatusColor(selectedAnimal.status)}>{selectedAnimal.status}</Badge>
+                <Badge className={getStatusColor(selectedAnimal.status)}>{getStatusLabel(selectedAnimal.status)}</Badge>
               </div>
 
               <div className="grid grid-cols-2 gap-4 text-sm">
