@@ -1,5 +1,7 @@
 "use client"
 
+import { Instagram } from "lucide-react"
+
 export function AccessSection() {
   return (
     <section id="access" className="py-20 px-4 bg-slate-50">
@@ -24,12 +26,25 @@ export function AccessSection() {
               <p>〒041-0843</p>
               <p>北海道函館市花園町23-3</p>
               <p>駐車場20台以上利用可</p>
+              <p>📞 0138-XX-XXXX</p>
             </div>
 
             <div className="pt-4 space-y-2 text-gray-700">
               <p className="text-lg font-medium">営業時間</p>
               <p>平日: 12:00 - 19:00</p>
               <p>土日祝: 11:00 - 18:00</p>
+            </div>
+
+            <div className="pt-6">
+              <a
+                href="https://www.instagram.com/anella_cafe_hakodate/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-full hover:from-purple-600 hover:to-pink-600 transition-colors duration-200 transform hover:scale-105"
+              >
+                <Instagram className="h-4 w-4" />
+                <span className="text-sm font-medium">Instagram</span>
+              </a>
             </div>
           </div>
 
