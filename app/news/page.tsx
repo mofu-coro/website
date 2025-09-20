@@ -6,9 +6,11 @@ import Image from "next/image"
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
 import { Header } from "@/components/header"
 import { newsData, formatDate, getImportantNews, type NewsItem } from "@/lib/news-data"
-import { Calendar, ArrowLeft, MessageCircle, Filter, ChevronLeft, ChevronRight } from "lucide-react"
+import { Calendar, ArrowLeft, MessageCircle, Filter, ChevronLeft, ChevronRight, Search, X, CalendarDays } from "lucide-react"
 
 function getCategoryColor(category: string) {
   switch (category) {
@@ -27,6 +29,10 @@ function getCategoryColor(category: string) {
 export default function NewsPage() {
   const [selectedCategory, setSelectedCategory] = useState<NewsItem["category"] | "all">("all")
   const [selectedService, setSelectedService] = useState<NewsItem["serviceTag"] | "all">("all")
+  const [searchQuery, setSearchQuery] = useState("")
+  const [dateFrom, setDateFrom] = useState("")
+  const [dateTo, setDateTo] = useState("")
+  const [showFilters, setShowFilters] = useState(false)
   const [currentPage, setCurrentPage] = useState(1)
   const itemsPerPage = 6
 
@@ -40,9 +46,21 @@ export default function NewsPage() {
     return sorted.filter(item => {
       const categoryMatch = selectedCategory === "all" || item.category === selectedCategory
       const serviceMatch = selectedService === "all" || item.serviceTag === selectedService
-      return categoryMatch && serviceMatch
+      
+      // Search filter
+      const searchMatch = searchQuery === "" || 
+        item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        item.content.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        (item.serviceTag && item.serviceTag.toLowerCase().includes(searchQuery.toLowerCase()))
+      
+      // Date range filter
+      const itemDate = new Date(item.date)
+      const dateFromMatch = dateFrom === "" || itemDate >= new Date(dateFrom)
+      const dateToMatch = dateTo === "" || itemDate <= new Date(dateTo)
+      
+      return categoryMatch && serviceMatch && searchMatch && dateFromMatch && dateToMatch
     })
-  }, [selectedCategory, selectedService])
+  }, [selectedCategory, selectedService, searchQuery, dateFrom, dateTo])
 
   // Pagination
   const totalPages = Math.ceil(filteredNews.length / itemsPerPage)
@@ -61,6 +79,25 @@ export default function NewsPage() {
     setSelectedService(service)
     setCurrentPage(1)
   }
+  
+  // Clear all filters
+  const clearAllFilters = () => {
+    setSelectedCategory("all")
+    setSelectedService("all")
+    setSearchQuery("")
+    setDateFrom("")
+    setDateTo("")
+    setCurrentPage(1)
+  }
+  
+  // Count active filters
+  const activeFilterCount = [
+    selectedCategory !== "all",
+    selectedService !== "all",
+    searchQuery !== "",
+    dateFrom !== "",
+    dateTo !== ""
+  ].filter(Boolean).length
 
   return (
     <div className="min-h-screen bg-background">
@@ -149,75 +186,232 @@ export default function NewsPage() {
               最新のお知らせやイベント情報をお届けします
             </p>
             
-            {/* Category Filter */}
-            <div className="space-y-6 mb-8">
-              <div className="flex flex-wrap items-center justify-center gap-3">
-                <div className="flex items-center gap-2 text-warm-700">
-                  <Filter className="h-4 w-4" />
-                  <span className="text-sm font-medium">カテゴリ:</span>
+            {/* Search Bar and Filter Toggle */}
+            <div className="max-w-4xl mx-auto space-y-6 mb-8">
+              {/* Search and Filter Controls */}
+              <div className="flex flex-col sm:flex-row gap-4 items-center">
+                <div className="relative flex-1 w-full">
+                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-warm-500" />
+                  <Input
+                    type="text"
+                    placeholder="キーワードで検索..."
+                    value={searchQuery}
+                    onChange={(e) => {
+                      setSearchQuery(e.target.value)
+                      setCurrentPage(1)
+                    }}
+                    className="pl-10 pr-10 border-warm-200 focus:border-sage-400"
+                  />
+                  {searchQuery && (
+                    <button
+                      onClick={() => {
+                        setSearchQuery("")
+                        setCurrentPage(1)
+                      }}
+                      className="absolute right-3 top-1/2 transform -translate-y-1/2 text-warm-500 hover:text-warm-700"
+                    >
+                      <X className="h-4 w-4" />
+                    </button>
+                  )}
                 </div>
-                {allCategories.map((category) => (
+                
+                <div className="flex gap-2">
                   <Button
-                    key={category}
-                    variant={selectedCategory === category ? "default" : "outline"}
-                    size="sm"
-                    onClick={() => handleCategoryChange(category)}
-                    className={selectedCategory === category 
-                      ? "bg-sage-600 hover:bg-sage-700 text-white" 
-                      : "border-sage-200 text-warm-700 hover:bg-sage-50"
-                    }
+                    variant="outline"
+                    onClick={() => setShowFilters(!showFilters)}
+                    className={`flex items-center gap-2 ${showFilters ? 'bg-sage-100 border-sage-400' : 'border-warm-200'}`}
                   >
-                    {category === "all" ? "すべて" : category}
-                    {category !== "all" && (
-                      <span className="ml-2 text-xs bg-sage-100 text-sage-700 px-1.5 py-0.5 rounded-full">
-                        {newsData.filter(item => item.category === category).length}
-                      </span>
+                    <Filter className="h-4 w-4" />
+                    詳細フィルター
+                    {activeFilterCount > 0 && (
+                      <Badge className="bg-sage-600 text-white text-xs px-1.5 py-0">
+                        {activeFilterCount}
+                      </Badge>
                     )}
                   </Button>
-                ))}
+                  
+                  {activeFilterCount > 0 && (
+                    <Button
+                      variant="outline"
+                      onClick={clearAllFilters}
+                      className="flex items-center gap-2 border-red-200 text-red-600 hover:bg-red-50"
+                    >
+                      <X className="h-4 w-4" />
+                      クリア
+                    </Button>
+                  )}
+                </div>
               </div>
+              
+              {/* Advanced Filters Panel */}
+              {showFilters && (
+                <div className="bg-sage-50 border border-sage-200 rounded-lg p-6 space-y-6 animate-in slide-in-from-top-2 duration-200">
+                  {/* Date Range Filter */}
+                  <div className="space-y-3">
+                    <div className="flex items-center gap-2 text-warm-700">
+                      <CalendarDays className="h-4 w-4" />
+                      <Label className="text-sm font-medium">期間で絞り込み</Label>
+                    </div>
+                    <div className="flex flex-col sm:flex-row gap-3">
+                      <div className="flex-1">
+                        <Input
+                          type="date"
+                          value={dateFrom}
+                          onChange={(e) => {
+                            setDateFrom(e.target.value)
+                            setCurrentPage(1)
+                          }}
+                          className="border-warm-200 focus:border-sage-400"
+                          placeholder="開始日"
+                        />
+                      </div>
+                      <div className="flex items-center justify-center">
+                        <span className="text-warm-600">〜</span>
+                      </div>
+                      <div className="flex-1">
+                        <Input
+                          type="date"
+                          value={dateTo}
+                          onChange={(e) => {
+                            setDateTo(e.target.value)
+                            setCurrentPage(1)
+                          }}
+                          className="border-warm-200 focus:border-sage-400"
+                          placeholder="終了日"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  
+                  {/* Category Filter */}
+                  <div className="space-y-3">
+                    <div className="flex items-center gap-2 text-warm-700">
+                      <span className="text-sm font-medium">カテゴリ</span>
+                    </div>
+                    <div className="flex flex-wrap gap-2">
+                      {allCategories.map((category) => (
+                        <Button
+                          key={category}
+                          variant={selectedCategory === category ? "default" : "outline"}
+                          size="sm"
+                          onClick={() => handleCategoryChange(category)}
+                          className={selectedCategory === category 
+                            ? "bg-sage-600 hover:bg-sage-700 text-white" 
+                            : "bg-white border-sage-200 text-warm-700 hover:bg-sage-100"
+                          }
+                        >
+                          {category === "all" ? "すべて" : category}
+                          {category !== "all" && (
+                            <span className={`ml-2 text-xs px-1.5 py-0.5 rounded-full ${
+                              selectedCategory === category 
+                                ? 'bg-sage-700 text-white' 
+                                : 'bg-sage-200 text-sage-700'
+                            }`}>
+                              {newsData.filter(item => item.category === category).length}
+                            </span>
+                          )}
+                        </Button>
+                      ))}
+                    </div>
+                  </div>
 
-              {/* Service Filter */}
-              <div className="flex flex-wrap items-center justify-center gap-3">
-                <div className="flex items-center gap-2 text-warm-700">
-                  <span className="text-sm font-medium">サービス:</span>
+                  {/* Service Filter */}
+                  <div className="space-y-3">
+                    <div className="flex items-center gap-2 text-warm-700">
+                      <span className="text-sm font-medium">サービス</span>
+                    </div>
+                    <div className="flex flex-wrap gap-2">
+                      {allServices.map((service) => (
+                        <Button
+                          key={service}
+                          variant={selectedService === service ? "default" : "outline"}
+                          size="sm"
+                          onClick={() => handleServiceChange(service)}
+                          className={selectedService === service 
+                            ? "bg-warm-600 hover:bg-warm-700 text-white" 
+                            : "bg-white border-warm-200 text-warm-700 hover:bg-warm-100"
+                          }
+                        >
+                          {service === "all" ? "すべて" : service}
+                          {service !== "all" && (
+                            <span className={`ml-2 text-xs px-1.5 py-0.5 rounded-full ${
+                              selectedService === service 
+                                ? 'bg-warm-700 text-white' 
+                                : 'bg-warm-200 text-warm-700'
+                            }`}>
+                              {newsData.filter(item => item.serviceTag === service).length}
+                            </span>
+                          )}
+                        </Button>
+                      ))}
+                    </div>
+                  </div>
                 </div>
-                {allServices.map((service) => (
-                  <Button
-                    key={service}
-                    variant={selectedService === service ? "default" : "outline"}
-                    size="sm"
-                    onClick={() => handleServiceChange(service)}
-                    className={selectedService === service 
-                      ? "bg-warm-600 hover:bg-warm-700 text-white" 
-                      : "border-warm-200 text-warm-700 hover:bg-warm-50"
-                    }
-                  >
-                    {service === "all" ? "すべて" : service}
-                    {service !== "all" && (
-                      <span className="ml-2 text-xs bg-warm-100 text-warm-700 px-1.5 py-0.5 rounded-full">
-                        {newsData.filter(item => item.serviceTag === service).length}
-                      </span>
-                    )}
-                  </Button>
-                ))}
-              </div>
+              )}
             </div>
 
-            {/* Results count */}
-            <p className="text-sm text-warm-600 mb-6">
-              {selectedCategory === "all" && selectedService === "all"
-                ? `全${filteredNews.length}件のお知らせ` 
-                : `絞り込み結果: ${filteredNews.length}件`
-              }
-              {(selectedCategory !== "all" || selectedService !== "all") && (
-                <span className="ml-2 text-xs">
-                  ({selectedCategory !== "all" && `カテゴリ: ${selectedCategory}`}
-                  {selectedCategory !== "all" && selectedService !== "all" && " + "}
-                  {selectedService !== "all" && `サービス: ${selectedService}`})
-                </span>
+            {/* Results count and Active Filters */}
+            <div className="text-center mb-6">
+              <p className="text-sm text-warm-600 mb-2">
+                {filteredNews.length === newsData.length
+                  ? `全${filteredNews.length}件のお知らせ` 
+                  : `絞り込み結果: ${filteredNews.length}件 / ${newsData.length}件`
+                }
+              </p>
+              
+              {/* Active Filters Display */}
+              {activeFilterCount > 0 && (
+                <div className="flex flex-wrap items-center justify-center gap-2 mt-3">
+                  {selectedCategory !== "all" && (
+                    <Badge className="bg-sage-100 text-sage-700 border border-sage-300">
+                      カテゴリ: {selectedCategory}
+                      <button
+                        onClick={() => handleCategoryChange("all")}
+                        className="ml-2 hover:text-sage-900"
+                      >
+                        <X className="h-3 w-3" />
+                      </button>
+                    </Badge>
+                  )}
+                  {selectedService !== "all" && (
+                    <Badge className="bg-warm-100 text-warm-700 border border-warm-300">
+                      サービス: {selectedService}
+                      <button
+                        onClick={() => handleServiceChange("all")}
+                        className="ml-2 hover:text-warm-900"
+                      >
+                        <X className="h-3 w-3" />
+                      </button>
+                    </Badge>
+                  )}
+                  {searchQuery && (
+                    <Badge className="bg-blue-100 text-blue-700 border border-blue-300">
+                      検索: {searchQuery}
+                      <button
+                        onClick={() => setSearchQuery("")}
+                        className="ml-2 hover:text-blue-900"
+                      >
+                        <X className="h-3 w-3" />
+                      </button>
+                    </Badge>
+                  )}
+                  {(dateFrom || dateTo) && (
+                    <Badge className="bg-purple-100 text-purple-700 border border-purple-300">
+                      期間: {dateFrom || "開始"} 〜 {dateTo || "終了"}
+                      <button
+                        onClick={() => {
+                          setDateFrom("")
+                          setDateTo("")
+                        }}
+                        className="ml-2 hover:text-purple-900"
+                      >
+                        <X className="h-3 w-3" />
+                      </button>
+                    </Badge>
+                  )}
+                </div>
               )}
-            </p>
+            </div>
           </div>
 
           {/* News Grid */}
@@ -311,7 +505,7 @@ export default function NewsPage() {
 
         {/* Contact Section */}
         <section>
-          <div className="text-center mb-16">
+          <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold mb-4 text-warm-900">お問い合わせ</h2>
             <p className="text-lg text-warm-700 max-w-3xl mx-auto">
               ご不明な点やご質問がございましたら、お気軽にお問い合わせください
@@ -319,61 +513,44 @@ export default function NewsPage() {
           </div>
 
           <div className="max-w-2xl mx-auto">
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <MessageCircle className="h-5 w-5 text-green-600" />
-                  LINEでお問い合わせ
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <p className="text-muted-foreground text-sm">
-                  お知らせに関するご質問やご相談を、LINEで気軽にお受けしています。お気軽にメッセージをお送りください。
-                </p>
-                
-                {/* Two Options Layout */}
-                <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-                  {/* QR Code Option */}
-                  <div className="text-center">
-                    <div className="bg-white p-3 rounded-lg shadow-sm inline-block mb-2 border">
-                      <img
-                        src="https://qr-official.line.me/gs/M_480aaqto_GW.png?oat_content=qr"
-                        alt="LINE友だち追加QRコード"
-                        width={80}
-                        height={80}
-                        className="mx-auto rounded"
-                      />
-                    </div>
-                    <p className="text-xs text-muted-foreground">QRコードを読み取り</p>
-                  </div>
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
+              {/* QR Code */}
+              <div className="text-center">
+                <img
+                  src="https://qr-official.line.me/gs/M_480aaqto_GW.png?oat_content=qr"
+                  alt="LINE友だち追加QRコード"
+                  width={120}
+                  height={120}
+                  className="mx-auto rounded-lg shadow-sm border bg-white p-3"
+                />
+                <p className="text-xs text-muted-foreground mt-2">QRコードを読み取り</p>
+              </div>
 
-                  {/* OR Divider */}
-                  <div className="flex items-center">
-                    <div className="bg-muted rounded-full px-3 py-1">
-                      <span className="text-muted-foreground font-medium text-xs">もしくは</span>
-                    </div>
-                  </div>
-
-                  {/* Button Option */}
-                  <div className="text-center">
-                    <a
-                      href="https://lin.ee/beSw4Fv"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-block transform hover:scale-105 transition-transform duration-200 mb-2"
-                    >
-                      <img
-                        src="https://scdn.line-apps.com/n/line_add_friends/btn/ja.png"
-                        alt="友だち追加"
-                        height={40}
-                        className="hover:opacity-90 transition-opacity shadow-sm rounded"
-                      />
-                    </a>
-                    <p className="text-xs text-muted-foreground">ボタンをタップ</p>
-                  </div>
+              {/* OR Divider */}
+              <div className="flex items-center">
+                <div className="bg-muted rounded-full px-3 py-1">
+                  <span className="text-muted-foreground font-medium text-xs">もしくは</span>
                 </div>
-              </CardContent>
-            </Card>
+              </div>
+
+              {/* Friend Add Button */}
+              <div className="text-center">
+                <a
+                  href="https://lin.ee/beSw4Fv"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-block transform hover:scale-105 transition-transform duration-200"
+                >
+                  <img
+                    src="https://scdn.line-apps.com/n/line_add_friends/btn/ja.png"
+                    alt="友だち追加"
+                    height={40}
+                    className="hover:opacity-90 transition-opacity shadow-sm rounded"
+                  />
+                </a>
+                <p className="text-xs text-muted-foreground mt-2">ボタンをタップ</p>
+              </div>
+            </div>
           </div>
         </section>
       </div>

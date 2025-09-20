@@ -1,7 +1,7 @@
 "use client"
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Heart, Clock, Users, CheckCircle, ArrowLeft, MessageCircle } from "lucide-react"
+import { Heart, Clock, CheckCircle, ArrowLeft, MessageCircle } from "lucide-react"
 import Link from "next/link"
 import Image from "next/image"
 
@@ -10,6 +10,7 @@ const interactionPrograms = [
     name: "ふれあい体験",
     duration: "時間制限なし",
     price: "大人 980円 / 子供 780円",
+    priceNote: "※お一人様あたりの料金です",
     description: "保護犬猫との自由なふれあいをお楽しみいただけます",
     features: ["犬猫との自由なふれあい", "写真撮影OK", "時間制限なし", "専門スタッフ常駐"],
     popular: false,
@@ -19,6 +20,7 @@ const interactionPrograms = [
     name: "ふれあい＋室内ドッグラン",
     duration: "時間制限なし",
     price: "ふれあい料金＋500円",
+    priceNote: "※追加500円は愛犬1頭あたりの料金です",
     description: "ふれあい体験に加えて、愛犬連れで室内ドッグランもご利用いただけます",
     features: ["犬猫とのふれあい", "愛犬連れOK", "室内ドッグラン利用", "雨の日も安心"],
     popular: true,
@@ -28,6 +30,7 @@ const interactionPrograms = [
     name: "サブスクプラン",
     duration: "通い放題",
     price: "月額 2,980円",
+    priceNote: "※ご家族全員・愛犬全頭が含まれます",
     description: "ふれあいと室内ドッグランが1ヶ月間通い放題のお得なプランです",
     features: ["ふれあい通い放題", "室内ドッグラン通い放題", "愛犬連れOK", "月額固定料金"],
     popular: false,
@@ -140,17 +143,16 @@ export default function ShelterPage() {
                 >
                   <CardHeader className="pb-4">
                     <CardTitle className={`text-xl mb-4 ${colors.textColor}`}>{program.name}</CardTitle>
-                    <div className={`flex items-center justify-between text-sm ${colors.subTextColor} mb-4`}>
+                    <div className={`flex items-center text-sm ${colors.subTextColor} mb-4`}>
                       <span className="flex items-center gap-1">
                         <Clock className="h-4 w-4" />
                         {program.duration}
                       </span>
-                      <span className="flex items-center gap-1">
-                        <Users className="h-4 w-4" />
-                        {program.maxPeople}
-                      </span>
                     </div>
                     <div className={`text-2xl font-bold ${colors.priceColor}`}>{program.price}</div>
+                    {program.priceNote && (
+                      <p className={`text-xs mt-2 ${colors.subTextColor}`}>{program.priceNote}</p>
+                    )}
                   </CardHeader>
                   <CardContent>
                     <p className={`${colors.subTextColor} mb-6`}>{program.description}</p>
@@ -277,40 +279,50 @@ export default function ShelterPage() {
 
                     <div className="relative z-10">
                       <div className="flex items-center gap-3 mb-6">
-                        <a 
-                          href="https://anella-group.co.jp/" 
-                          target="_blank" 
-                          rel="noopener noreferrer"
-                          className="bg-white/60 p-3 rounded-full hover:bg-white/80 transition-colors duration-200"
-                        >
-                          <img 
-                            src="/anella-logo.png" 
-                            alt="ANELLA Group Logo" 
-                            className="h-8 w-8 object-contain"
-                          />
-                        </a>
-                        <span className="text-gray-800 font-medium">全国での実績</span>
-                      </div>
-
-                      <div className="mb-6">
-                        <div className="text-6xl md:text-7xl font-bold mb-2 text-gray-800">
-                          2,000+
+                        <div className="bg-sage-100 p-3 rounded-full">
+                          <a 
+                            href="https://anella-group.co.jp/" 
+                            target="_blank" 
+                            rel="noopener noreferrer"
+                            className="hover:opacity-80 transition-opacity duration-200"
+                          >
+                            <img 
+                              src="/anella-logo.png" 
+                              alt="ANELLA Group Logo" 
+                              className="h-6 w-6 object-contain"
+                            />
+                          </a>
                         </div>
-                        <div className="text-2xl font-semibold text-gray-800">救済された命</div>
+                        <span className="text-gray-800 font-semibold text-lg">保護犬猫実績</span>
                       </div>
 
-                      <p className="text-gray-700 text-lg leading-relaxed">
-                        アネラカフェ全店舗で、これまでに2,000頭を超える保護犬猫の新しい家族を見つけ、幸せな生活をサポートしてきました。
+                      <div className="mb-8">
+                        <div className="text-4xl font-bold text-gray-800 mb-2">
+                          3,000+
+                        </div>
+                        <div className="text-lg font-medium text-gray-700">救済された命</div>
+                      </div>
+
+                      <p className="text-gray-700 leading-relaxed mb-6">
+                        アネラカフェ全店舗で、これまでに3,000頭を超える保護犬猫の新しい家族を見つけ、幸せな生活をサポートしてきました。
+                        <br />
+                        全国のアネラグループでの継続的な動物愛護活動を通じて、殺処分0を目指します。
+                      </p>
+                      
+                      {/* ANELLA Group Link */}
+                      <div className="text-center">
                         <a 
                           href="https://anella-group.co.jp/" 
                           target="_blank" 
                           rel="noopener noreferrer"
-                          className="text-gray-600 hover:text-gray-800 underline decoration-1 underline-offset-2 transition-colors duration-200 ml-1"
+                          className="inline-flex items-center gap-2 bg-white/70 hover:bg-white/90 text-gray-800 px-5 py-2.5 rounded-full font-medium transition-colors duration-200 shadow-md hover:shadow-lg text-sm"
                         >
-                          アネラグループ
+                          <span>詳細を見る</span>
+                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                          </svg>
                         </a>
-                        の取り組みをご覧ください。
-                      </p>
+                      </div>
                     </div>
                   </div>
 
@@ -318,15 +330,22 @@ export default function ShelterPage() {
                   <div className="p-12 bg-gradient-to-br from-white to-warm-50">
                     <div className="h-full flex flex-col justify-center">
                       <div className="mb-8">
-                        <div className="flex items-center gap-3 mb-4">
+                        <div className="flex items-center gap-3 mb-6">
                           <div className="bg-sage-100 p-3 rounded-full">
-                            <Users className="h-6 w-6 text-sage-700" />
+                            <Heart className="h-6 w-6 text-sage-700" />
                           </div>
-                          <span className="text-sage-700 font-semibold text-lg">全国ネットワーク</span>
+                          <span className="text-gray-800 font-semibold text-lg">全国ネットワーク</span>
                         </div>
-                        <div className="text-4xl font-bold text-sage-800 mb-2">10+ 店舗</div>
-                        <p className="text-warm-700 mb-6">
-                          日本全国に展開するフランチャイズネットワークとして、各地域で動物愛護活動を推進
+                        <div className="text-4xl font-bold text-gray-800 mb-2">
+                          10+
+                        </div>
+                        <div className="text-lg font-medium text-gray-700">店舗数</div>
+                      </div>
+
+                      <p className="text-gray-700 leading-relaxed mb-6">
+                          日本全国に展開するフランチャイズネットワークとして、各地域で動物愛護活動を推進しています。
+                          <br />
+                          現在、関東 / 九州 / 近畿 / 北陸 / 中国 / 四国など全国各地に展開中。
                         </p>
                         
                         {/* Store List Link */}
@@ -335,7 +354,7 @@ export default function ShelterPage() {
                             href="https://anella-group.co.jp/our-business#base" 
                             target="_blank" 
                             rel="noopener noreferrer"
-                            className="inline-flex items-center gap-2 bg-sage-200 hover:bg-sage-300 text-sage-800 px-5 py-2.5 rounded-full font-medium transition-colors duration-200 shadow-md hover:shadow-lg text-sm"
+                            className="inline-flex items-center gap-2 bg-white/70 hover:bg-white/90 text-gray-800 px-5 py-2.5 rounded-full font-medium transition-colors duration-200 shadow-md hover:shadow-lg text-sm"
                           >
                             <span>店舗一覧</span>
                             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -343,91 +362,63 @@ export default function ShelterPage() {
                             </svg>
                           </a>
                         </div>
-                      </div>
-
-                      <div className="bg-gradient-to-r from-sage-100 to-warm-100 rounded-2xl p-6 border border-sage-200">
-                        <div className="flex items-center gap-3 mb-3">
-                          <div className="bg-sage-200 p-2 rounded-full">
-                            <Heart className="h-5 w-5 text-sage-800" />
-                          </div>
-                        </div>
-                        <p className="text-sage-700 leading-relaxed">
-                          専門スタッフによる質の高いケアで、地域の動物愛護活動に貢献し、一頭でも多くの命を救うために日々取り組んでいます
-                        </p>
-                      </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
 
-            {/* Mission Statement */}
           </div>
         </section>
 
         <section>
-          <div className="text-center mb-16">
+          <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold mb-4 text-warm-900">お問い合わせ</h2>
+            <p className="text-lg text-warm-700 max-w-3xl mx-auto">
+            ご不明な点やご質問がございましたら、お気軽にお問い合わせください
+            </p>
           </div>
 
           <div className="max-w-2xl mx-auto">
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <MessageCircle className="h-5 w-5 text-green-600" />
-                  LINE譲渡相談
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <p className="text-muted-foreground text-sm">
-                  譲渡に関するご質問やご相談を、LINEで気軽にお受けしています。動物の詳細情報や譲渡条件についてもお答えします。
-                </p>
-                
-                {/* Two Options Layout */}
-                <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-                  {/* QR Code Option */}
-                  <div className="text-center">
-                    <div className="bg-white p-3 rounded-lg shadow-sm inline-block mb-2 border">
-                      <img
-                        src="https://qr-official.line.me/gs/M_480aaqto_GW.png?oat_content=qr"
-                        alt="LINE友だち追加QRコード"
-                        width={80}
-                        height={80}
-                        className="mx-auto rounded"
-                      />
-                    </div>
-                    <p className="text-xs text-muted-foreground">QRコードを読み取り</p>
-                  </div>
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
+              {/* QR Code */}
+              <div className="text-center">
+                <img
+                  src="https://qr-official.line.me/gs/M_480aaqto_GW.png?oat_content=qr"
+                  alt="LINE友だち追加QRコード"
+                  width={120}
+                  height={120}
+                  className="mx-auto rounded-lg shadow-sm border bg-white p-3"
+                />
+                <p className="text-xs text-muted-foreground mt-2">QRコードを読み取り</p>
+              </div>
 
-                  {/* OR Divider */}
-                  <div className="flex items-center">
-                    <div className="bg-muted rounded-full px-3 py-1">
-                      <span className="text-muted-foreground font-medium text-xs">もしくは</span>
-                    </div>
-                  </div>
-
-                  {/* Button Option */}
-                  <div className="text-center">
-                    <a
-                      href="https://lin.ee/beSw4Fv"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-block transform hover:scale-105 transition-transform duration-200 mb-2"
-                    >
-                      <img
-                        src="https://scdn.line-apps.com/n/line_add_friends/btn/ja.png"
-                        alt="友だち追加"
-                        height={40}
-                        className="hover:opacity-90 transition-opacity shadow-sm rounded"
-                      />
-                    </a>
-                    <p className="text-xs text-muted-foreground">ボタンをタップ</p>
-                  </div>
+              {/* OR Divider */}
+              <div className="flex items-center">
+                <div className="bg-muted rounded-full px-3 py-1">
+                  <span className="text-muted-foreground font-medium text-xs">もしくは</span>
                 </div>
-              </CardContent>
-            </Card>
-          </div>
+              </div>
 
+              {/* Friend Add Button */}
+              <div className="text-center">
+                <a
+                  href="https://lin.ee/beSw4Fv"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-block transform hover:scale-105 transition-transform duration-200"
+                >
+                  <img
+                    src="https://scdn.line-apps.com/n/line_add_friends/btn/ja.png"
+                    alt="友だち追加"
+                    height={40}
+                    className="hover:opacity-90 transition-opacity shadow-sm rounded"
+                  />
+                </a>
+                <p className="text-xs text-muted-foreground mt-2">ボタンをタップ</p>
+              </div>
+            </div>
+          </div>
         </section>
       </div>
     </div>

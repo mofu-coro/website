@@ -23,31 +23,31 @@ import Image from "next/image"
 
 const dogRunPlans = [
   {
-    name: "お試し利用プラン",
-    duration: "30分",
+    name: "単発利用プラン",
+    duration: "時間無制限",
     price: "500円",
-    description: "初めての方におすすめ。ドッグランの雰囲気を体験できます",
-    features: ["スタッフ同伴", "施設説明", "安全指導", "写真撮影OK", "他の犬との相性チェック"],
+    description: "1頭での利用プラン。時間を気にせずゆっくりとお過ごしいただけます",
+    features: ["時間無制限", "自由遊び", "安全管理"],
     popular: false,
     maxDogs: "1頭",
   },
   {
-    name: "スタンダードプラン",
-    duration: "60分",
-    price: "800円",
-    description: "たっぷり遊べる人気のプラン。運動不足解消に最適です",
-    features: ["自由遊び", "おもちゃ貸出", "水分補給サポート", "簡単なしつけ指導", "他の犬との交流"],
-    popular: true,
-    maxDogs: "2頭まで",
+    name: "専用エリア貸切プラン",
+    duration: "1時間",
+    price: "980円",
+    description: "他の犬を気にせず専用エリアでのびのび遊べるプラン",
+    features: ["専用エリア貸切", "頭数問わず", "プライベート空間"],
+    popular: false,
+    maxDogs: "頭数問わず",
   },
   {
-    name: "プレミアムプラン",
-    duration: "90分",
-    price: "1,200円",
-    description: "ゆったりと過ごせる贅沢プラン。社会化訓練も含まれます",
-    features: ["専用エリア利用", "アジリティ体験", "個別トレーニング", "健康チェック", "写真・動画撮影"],
-    popular: false,
-    maxDogs: "3頭まで",
+    name: "使い放題プラン",
+    duration: "無制限",
+    price: "2,980円",
+    description: "1日中何度でも利用可能な使い放題プラン。複数頭での利用にもおすすめです",
+    features: ["時間無制限", "頭数問わず", "何度でも入退場可能"],
+    popular: true,
+    maxDogs: "頭数問わず",
   },
 ]
 
@@ -155,7 +155,7 @@ export default function DogRunPage() {
                 </CardHeader>
                 <CardContent>
                   <p className="text-warm-700 mb-4">{plan.description}</p>
-                  <div className="space-y-2 mb-6">
+                  <div className="space-y-2">
                     {plan.features.map((feature, idx) => (
                       <div key={idx} className="flex items-center gap-2 text-sm text-warm-700">
                         <CheckCircle className="h-4 w-4 text-sage-600 flex-shrink-0" />
@@ -163,7 +163,6 @@ export default function DogRunPage() {
                       </div>
                     ))}
                   </div>
-                  <Button className="w-full bg-slate-800 hover:bg-slate-900 text-white">このプランを予約</Button>
                 </CardContent>
               </Card>
             ))}
@@ -178,23 +177,32 @@ export default function DogRunPage() {
               愛犬が安全に楽しく過ごせるよう、充実した設備と専門スタッフでサポートします
             </p>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {facilityFeatures.map((feature, index) => {
-                const Icon = feature.icon
-                return (
-                  <Card key={index} className="text-center border-warm-200 hover:shadow-lg transition-shadow bg-white">
-                    <CardHeader>
-                      <div className="mx-auto mb-4 p-4 bg-warm-100 rounded-full w-fit">
-                        <Icon className="h-8 w-8 text-warm-600" />
-                      </div>
-                      <div className="text-2xl font-bold text-sage-600 mb-2">{feature.highlight}</div>
-                      <CardTitle className="text-xl text-warm-900">{feature.title}</CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <p className="text-warm-700">{feature.description}</p>
-                    </CardContent>
-                  </Card>
-                )
-              })}
+              {/* Image Placeholder 1 */}
+              <div className="text-center">
+                <div className="aspect-video bg-gray-200 rounded-lg mb-4 flex items-center justify-center">
+                  <Camera className="h-12 w-12 text-gray-400" />
+                </div>
+                <h3 className="text-xl font-bold text-warm-900 mb-2">広々とした安全な環境</h3>
+                <p className="text-warm-700">約100㎡の広いドッグランで、小型犬・中型犬それぞれに適したエリアを完備しています</p>
+              </div>
+              
+              {/* Image Placeholder 2 */}
+              <div className="text-center">
+                <div className="aspect-video bg-gray-200 rounded-lg mb-4 flex items-center justify-center">
+                  <Camera className="h-12 w-12 text-gray-400" />
+                </div>
+                <h3 className="text-xl font-bold text-warm-900 mb-2">充実した設備</h3>
+                <p className="text-warm-700">日陰スペース、足洗い場など、快適に過ごせる設備が揃っています</p>
+              </div>
+              
+              {/* Image Placeholder 3 */}
+              <div className="text-center">
+                <div className="aspect-video bg-gray-200 rounded-lg mb-4 flex items-center justify-center">
+                  <Camera className="h-12 w-12 text-gray-400" />
+                </div>
+                <h3 className="text-xl font-bold text-warm-900 mb-2">専門スタッフ常駐</h3>
+                <p className="text-warm-700">愛玩動物看護師が店舗に常駐しているため、適切な安全管理と対応が可能です</p>
+              </div>
             </div>
           </div>
         </section>
@@ -230,94 +238,58 @@ export default function DogRunPage() {
           </div>
         </section>
 
-        {/* Contact and Location */}
-        <section className="bg-sage-50 -mx-4 px-4 py-16">
-          <div className="container mx-auto">
-            <h2 className="text-3xl md:text-4xl font-bold text-center mb-4 text-warm-900">ご予約・お問い合わせ</h2>
-            <p className="text-center text-warm-700 mb-12 max-w-2xl mx-auto">
-              ドッグランのご利用は事前予約制です。お電話またはメールでご予約ください
+        {/* Contact Section */}
+        <section>
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-warm-900">お問い合わせ</h2>
+            <p className="text-lg text-warm-700 max-w-3xl mx-auto">
+              ドッグランに関するご質問がございましたら、お気軽にお問い合わせください
             </p>
+          </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
-              {/* Contact Information */}
-              <div className="space-y-6">
-                <Card className="border-warm-200">
-                  <CardContent className="p-8 text-center">
-                    <Phone className="h-10 w-10 text-warm-600 mx-auto mb-4" />
-                    <h3 className="font-bold text-lg mb-2 text-warm-900">お電話でのご予約</h3>
-                    <p className="text-2xl font-bold text-sage-600 mb-2">03-1234-5678</p>
-                    <p className="text-sm text-warm-600 mb-1">受付時間: 平日 9:00-18:00</p>
-                    <p className="text-sm text-warm-600">土日祝 10:00-17:00</p>
-                  </CardContent>
-                </Card>
-                <Card className="border-warm-200">
-                  <CardContent className="p-8 text-center">
-                    <Mail className="h-10 w-10 text-warm-600 mx-auto mb-4" />
-                    <h3 className="font-bold text-lg mb-2 text-warm-900">メールでのお問い合わせ</h3>
-                    <p className="text-lg font-semibold text-sage-600 mb-2">dogrun@inochi-tsunagi.jp</p>
-                    <p className="text-sm text-warm-600 mb-1">24時間受付</p>
-                    <p className="text-sm text-warm-600">返信: 1営業日以内</p>
-                  </CardContent>
-                </Card>
+          <div className="max-w-2xl mx-auto">
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
+              {/* QR Code */}
+              <div className="text-center">
+                <img
+                  src="https://qr-official.line.me/gs/M_480aaqto_GW.png?oat_content=qr"
+                  alt="LINE友だち追加QRコード"
+                  width={120}
+                  height={120}
+                  className="mx-auto rounded-lg shadow-sm border bg-white p-3"
+                />
+                <p className="text-xs text-muted-foreground mt-2">QRコードを読み取り</p>
               </div>
 
-              {/* Location and Hours */}
-              <Card className="border-warm-200">
-                <CardContent className="p-8">
-                  <MapPin className="h-12 w-12 text-warm-600 mx-auto mb-4" />
-                  <h3 className="font-bold text-xl mb-4 text-warm-900 text-center">施設情報</h3>
+              {/* OR Divider */}
+              <div className="flex items-center">
+                <div className="bg-muted rounded-full px-3 py-1">
+                  <span className="text-muted-foreground font-medium text-xs">もしくは</span>
+                </div>
+              </div>
 
-                  <div className="space-y-4">
-                    <div>
-                      <h4 className="font-semibold text-warm-900 mb-2">所在地</h4>
-                      <p className="text-warm-700">
-                        〒123-4567
-                        <br />
-                        東京都○○区○○町1-2-3
-                        <br />
-                        いのちつなぎ動物愛護センター
-                      </p>
-                    </div>
-
-                    <div>
-                      <h4 className="font-semibold text-warm-900 mb-2">営業時間</h4>
-                      <div className="text-warm-700 space-y-1">
-                        <p>平日: 10:00 - 18:00</p>
-                        <p>土日祝: 9:00 - 17:00</p>
-                        <p className="text-sm text-warm-600">定休日: 毎週水曜日</p>
-                      </div>
-                    </div>
-
-                    <div>
-                      <h4 className="font-semibold text-warm-900 mb-2">駐車場</h4>
-                      <p className="text-warm-700">無料駐車場 20台完備</p>
-                    </div>
-                  </div>
-
-                  <Button
-                    variant="outline"
-                    className="w-full mt-6 border-warm-300 text-warm-700 hover:bg-warm-50 bg-transparent"
-                  >
-                    <MapPin className="h-4 w-4 mr-2" />
-                    地図を見る
-                  </Button>
-                </CardContent>
-              </Card>
+              {/* Friend Add Button */}
+              <div className="text-center">
+                <a
+                  href="https://lin.ee/beSw4Fv"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-block transform hover:scale-105 transition-transform duration-200"
+                >
+                  <img
+                    src="https://scdn.line-apps.com/n/line_add_friends/btn/ja.png"
+                    alt="友だち追加"
+                    height={40}
+                    className="hover:opacity-90 transition-opacity shadow-sm rounded"
+                  />
+                </a>
+                <p className="text-xs text-muted-foreground mt-2">ボタンをタップ</p>
+              </div>
             </div>
 
-            {/* Booking Notice */}
-            <Card className="border-sage-300 bg-sage-100">
-              <CardContent className="p-8 text-center">
-                <Camera className="h-10 w-10 text-sage-600 mx-auto mb-4" />
-                <h3 className="font-bold text-lg mb-4 text-warm-900">ご予約について</h3>
-                <div className="text-warm-700 space-y-2 max-w-2xl mx-auto">
-                  <p>• ご利用は完全予約制です（当日予約も空きがあれば可能）</p>
-                  <p>• 初回ご利用時は30分前にお越しください（説明・手続きのため）</p>
-                  <p>• 雨天時は屋根付きエリアでのご利用となります</p>
-                  <p>• 写真・動画撮影は自由ですが、他の利用者様への配慮をお願いします</p>
-                </div>
-              </CardContent>
-            </Card>
+            <div className="text-center pt-6 space-y-1">
+              <p className="text-xs text-muted-foreground">※初回ご利用時は10分前にお越しください（説明・手続きのため）</p>
+            </div>
           </div>
         </section>
       </div>

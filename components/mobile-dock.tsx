@@ -14,7 +14,11 @@ export function MobileDock() {
           onClick={() => (window.location.href = "/services/shelter")}
         >
           <Heart className="h-5 w-5" />
-          <span className="text-xs">ふれあい</span>
+          <span className="text-xs leading-tight text-center">
+            保護犬猫
+            <br />
+            ふれあい
+          </span>
         </Button>
 
         <Button
@@ -24,7 +28,11 @@ export function MobileDock() {
           onClick={() => (window.location.href = "/services/trimming")}
         >
           <Calendar className="h-5 w-5" />
-          <span className="text-xs">トリミング</span>
+          <span className="text-xs leading-tight text-center">
+            トリミング・
+            <br />
+            一時預かり
+          </span>
         </Button>
 
         <Button
